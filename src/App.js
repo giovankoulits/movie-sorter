@@ -38,6 +38,7 @@ function App() {
                       title: movie.title,
                       episodeId: movie.episode_id,
                       releaseDate: movie.release_date,
+                      director: movie.director,
                       plot: movie.opening_crawl,
                       poster: updatedMovie.Poster,
                       id: updatedMovie.imdbID,
@@ -72,17 +73,13 @@ function App() {
       return 0;
     };
 
-    if (movies) {
+    if (movies.length > 0) {
       const sortedMovies = Array.from(movies).sort(compare);
       setMovies(sortedMovies);
-      setSelectedMovie('');
+      setSelectedMovie(0);
       return;
     }
   }
-
-  /*     let sortedMovies = copiedMovies.sort((a, b) => {
-      return a.first_name.toLowerCase() < a.first_name.toLowerCase();
-    }); */
 
   function onSearch(e) {
     setSearch(e.target.value);
@@ -121,21 +118,20 @@ function App() {
   };
 
   return (
-    <div>
-      <Container>
-        <Row>
-          <h1 className='text-center mt-4'>Movie Sorter</h1>
+    <div style={{ height: '100vh' }}>
+      <Container xxl className='pt-4'>
+        <Row className='g-0'>
           <SearchForm onSearch={onSearch} sortByCriteria={sortByCriteria} />
         </Row>
-        <Row>
-          <Col xs={12} xl={6}>
+        <Row className='g-0'>
+          <Col className='pt-4' xs={12} xl={6}>
             <MoviesTable
               movies={movies}
               search={search}
               selectMovie={selectMovie}
             />
           </Col>
-          <Col xs={12} xl={6}>
+          <Col className='ps-xl-4 py-4' xs={12} xl={6}>
             <MovieCard movies={movies} selectedMovie={selectedMovie} />
           </Col>
         </Row>

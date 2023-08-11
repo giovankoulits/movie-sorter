@@ -4,15 +4,15 @@ import { FaStar } from 'react-icons/fa';
 
 const MoviesTable = ({ movies, search, selectMovie }) => {
   return (
-    <Table bordered hover>
-      <thead>
+    <Table className='pb-0 mb-0 ' hover>
+      {/*    <thead>
         <tr>
           <th>EPISODE</th>
           <th>TITLE</th>
           <th>RELEASE DATE</th>
           <th>RATING</th>
         </tr>
-      </thead>
+      </thead> */}
       <tbody>
         {movies
           .filter((movie) => {
