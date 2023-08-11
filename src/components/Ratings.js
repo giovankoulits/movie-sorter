@@ -1,22 +1,32 @@
-import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { nanoid } from 'nanoid';
+import { BsStar, BsStarHalf, BsStarFill } from 'react-icons/bs';
 
-const Ratings = ({ movie, movies }) => {
+const Ratings = ({ fs, averageRating }) => {
+  const halfStar =
+    parseInt(averageRating?.toString().slice(-1)) > 2 ? true : false;
+  const style = { fontSize: `${fs}`, color: '#F0B855' };
   return (
     <>
-      {Array.from(Array(10)).map((star, index) => (
-        <FaStarHalfAlt
-          className='fs-6'
-          key={nanoid()}
-          style={{
-            color: `${
-              Math.round(movie?.ratings.averageRating / 10) > index
-                ? '#F0B53D'
-                : 'gray'
-            } `,
-          }}
-        />
-      ))}
+      {Array.from(Array(10)).map((star, index) => {
+        if (Math.round(averageRating / 10) > index) {
+          if (Math.round(averageRating / 10) - index === 1 && halfStar) {
+            return (
+              <BsStarHalf
+                className={`${fs} me-1`}
+                key={nanoid()}
+                style={style}
+              />
+            );
+          }
+          return (
+            <BsStarFill className={`${fs} me-1`} key={nanoid()} style={style} />
+          );
+        } else {
+          return (
+            <BsStar className={`${fs} me-1`} style={style} key={nanoid()} />
+          );
+        }
+      })}
     </>
   );
 };

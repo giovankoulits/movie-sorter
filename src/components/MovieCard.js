@@ -1,12 +1,39 @@
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { Badge } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
 import Ratings from './Ratings';
+import { nanoid } from 'nanoid';
 const MovieCard = ({ movies, selectedMovie }) => {
   const movie = selectedMovie !== '' ? movies[selectedMovie] : null;
   const display = movie ? 'block' : 'none';
   const badgeStyle =
-    'badge bg-light bg-gradient border border-info border-1 text-info px-3  py-2 rounded-pill me-2 fw-normal mb-3';
+    'badge bg-light bg-gradient border border-info border-1   text-secondary px-3 fs-6 py-2 rounded-pill me-2 fw-normal mb-3';
+
+  const iterateRatings = () => {
+    let badges = [];
+    if (movie?.ratings) {
+      for (const key in movie.ratings) {
+        if (key === 'averageRating') {
+          continue;
+        }
+        badges.push(
+          <Badge
+            className={badgeStyle}
+          >{`${key}: ${movie.ratings[key]} %`}</Badge>
+        );
+      }
+    }
+    return badges;
+  };
+
+  function calculateRatingColor() {
+    const rating = movie?.ratings.averageRating;
+    if (rating) {
+      if (rating < 60) return 'danger';
+      if (rating >= 60 && rating < 75) return 'warning';
+      if (rating >= 75) return 'success';
+    }
+  }
 
   return (
     <>
@@ -24,24 +51,23 @@ const MovieCard = ({ movies, selectedMovie }) => {
           />
         </Col>
         <Col xs={8} xxl={8}>
-          <p className='p-0'>{movie?.plot || ''}</p>
+          <p key={nanoid()} className='p-0'>
+            {movie?.plot}
+          </p>
         </Col>
-        <h4 className='my-4' style={{ display: display }}>
-          Directed by {movie?.director}
-        </h4>
-        <h5 style={{ display: display }} className='mb-4'>
-          Average Rating: <Ratings movie={movie} />
-        </h5>
         <div style={{ display: display }}>
-          <Badge className={badgeStyle}>
-            {`Internet Movie Database: ${movie?.ratings.imdbRating}%`}
-          </Badge>
-          <Badge className={badgeStyle}>
-            {`Rotten Tomatoes: ${movie?.ratings.rottenTomatoesRating}%`}
-          </Badge>
-          <Badge className={badgeStyle}>
-            {`Metacritic: ${movie?.ratings.metacriticRating}%`}
-          </Badge>
+          <h4 className='my-3 fw-normal'>Directed by {movie?.director}</h4>
+          <h5 className='mb-4 fw-normal'>
+            Average Score:{' '}
+            {/*   <Ratings
+              fs={'16px'}
+              averageRating={movie?.ratings?.averageRating}
+            /> */}
+            <Badge className='ms-2 fs-5' bg={calculateRatingColor()}>
+              {movie?.ratings?.averageRating}
+            </Badge>
+          </h5>
+          {iterateRatings()}
         </div>
       </Row>
     </>

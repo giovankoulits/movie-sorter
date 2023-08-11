@@ -1,18 +1,11 @@
 import Table from 'react-bootstrap/Table';
 import { nanoid } from 'nanoid';
-import { FaStar } from 'react-icons/fa';
+import Ratings from './Ratings';
+import Td from './Td';
 
 const MoviesTable = ({ movies, search, selectMovie }) => {
   return (
     <Table className='pb-0 mb-0 ' hover>
-      {/*    <thead>
-        <tr>
-          <th>EPISODE</th>
-          <th>TITLE</th>
-          <th>RELEASE DATE</th>
-          <th>RATING</th>
-        </tr>
-      </thead> */}
       <tbody>
         {movies
           .filter((movie) => {
@@ -22,14 +15,15 @@ const MoviesTable = ({ movies, search, selectMovie }) => {
           })
           .map((movie, index) => (
             <tr key={nanoid()} onClick={(e) => selectMovie(index)}>
-              <td>EPISODE: {movie.episodeId}</td>
-              <td>{movie.title}</td>
-              <td>{movie.releaseDate}</td>
-              <td className='movie-rating'>
-                {movie?.ratings.averageRating}
-                {/*    {Array.from(Array(10)).map((star) => (
-                  <FaStar key={nanoid()} style={{ color: 'orange' }} />
-                ))} */}
+              <Td search={search} movieData={movie.episodeId} />
+              <Td search={search} movieData={movie.title} />
+              <Td search={search} movieData={movie.releaseDate} />
+
+              <td className='py-3'>
+                <Ratings
+                  fs={'16px'}
+                  averageRating={movie?.ratings.averageRating}
+                />
               </td>
             </tr>
           ))}

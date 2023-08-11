@@ -1,20 +1,22 @@
-body {
-  margin: 0;
-  font-family: 'Mulish', sans-serif;
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+  font-family: 'Poppins', sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 tr:hover {
   cursor: pointer;
 }
 
-tbody tr:hover {
-  background-color: aquamarine !important;
+td {
+  font-size: 16px;
+}
+
+.MyHighlightClass {
+  background-color: #f0b855;
+  padding: 1px 2px;
 }

@@ -1,6 +1,7 @@
 ///hooks
 import React, { useState, useEffect } from 'react';
 ///styles and bootstrap components
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -15,10 +16,11 @@ function App() {
   const [search, setSearch] = useState('');
   const [selectedMovie, setSelectedMovie] = useState('');
   ///
+
   useEffect(() => {
     const fetchData = async () => {
       if (!movies.length) {
-        fetch('https://swapi.dev/api/films')
+        fetch('https://swapi.dev/api/films/?format=json')
           .then((res) => res.json())
           .then((data) =>
             data.results.forEach((movie) => {
@@ -111,9 +113,9 @@ function App() {
     const averageRating = Math.round(aggregateRating / ratingsArray.length);
     return {
       averageRating,
-      imdbRating,
-      rottenTomatoesRating,
-      metacriticRating,
+      ['Internet Movie Database']: imdbRating,
+      ['Rotten Tomatoes ']: rottenTomatoesRating,
+      ['Metacritic Rating']: metacriticRating,
     };
   };
 
@@ -124,14 +126,14 @@ function App() {
           <SearchForm onSearch={onSearch} sortByCriteria={sortByCriteria} />
         </Row>
         <Row className='g-0'>
-          <Col className='pt-4' xs={12} xl={6}>
+          <Col xs={12} xl={6}>
             <MoviesTable
               movies={movies}
               search={search}
               selectMovie={selectMovie}
             />
           </Col>
-          <Col className='ps-xl-4 py-4' xs={12} xl={6}>
+          <Col className='ps-xl-4 py-3' xs={12} xl={6}>
             <MovieCard movies={movies} selectedMovie={selectedMovie} />
           </Col>
         </Row>

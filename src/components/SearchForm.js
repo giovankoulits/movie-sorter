@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useRef } from 'react';
-
+import { BsSearch } from 'react-icons/bs';
 const SearchForm = ({ onSearch, sortByCriteria }) => {
   const inputRef = useRef(null);
 
@@ -39,6 +39,9 @@ const SearchForm = ({ onSearch, sortByCriteria }) => {
           </Col>
           <Col xs={12} md={9}>
             <InputGroup className='my-3'>
+              <InputGroup.Text id='basic-addon1'>
+                <BsSearch />
+              </InputGroup.Text>
               <Form.Control onChange={onSearch} placeholder='Search Movies' />
             </InputGroup>
           </Col>
