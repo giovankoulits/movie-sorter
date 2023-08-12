@@ -1,20 +1,16 @@
-import React from 'react';
 import Highlighter from 'react-highlight-words';
 
-const Td = ({ movieData, search }) => {
+const TableCell = ({ search, movieData }) => {
   let string = movieData;
 
   if (typeof movieData === 'number') {
-    string = 'EPISODE' + movieData;
+    string = 'EPISODE' + ' ' + movieData;
   }
 
   return (
     <td className='py-3'>
-      <Highlighter
-        highlightStyle={{
-          fontWeight: 600,
-        }}
-        highlightClassName='MyHighlightClass'
+      <Highlighter // highlight searched text in table cell
+        highlightClassName='myHighlightClass'
         searchWords={[search]}
         autoEscape={true}
         textToHighlight={string}
@@ -23,4 +19,4 @@ const Td = ({ movieData, search }) => {
   );
 };
 
-export default Td;
+export default TableCell;

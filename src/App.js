@@ -1,21 +1,23 @@
-///hooks
+//hooks
 import React, { useState, useEffect } from 'react';
-///styles and bootstrap components
-import './App.css';
+//nanoid for unique keys
+import { nanoid } from 'nanoid';
+// styles
+import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+//bootstrap components
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-///components
+//components
 import SearchForm from './components/SearchForm';
-import MoviesTable from './components/MoviesTable';
+import MoviesTable from './components/Table/MoviesTable';
 import MovieCard from './components/MovieCard';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState('');
   const [selectedMovie, setSelectedMovie] = useState('');
-  ///
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +59,7 @@ function App() {
 
   function sortByCriteria(value) {
     const compare = (movieA, movieB) => {
+      //Sort according to rating
       if (movieA[value]?.averageRating) {
         if (movieA[value].averageRating > movieB[value].averageRating) {
           return -1;
@@ -66,6 +69,7 @@ function App() {
         }
         return 0;
       }
+      //Sort according to year or episode
       if (movieA[value] > movieB[value]) {
         return 1;
       }
@@ -76,6 +80,7 @@ function App() {
     };
 
     if (movies.length > 0) {
+      //Copy movies array and sort
       const sortedMovies = Array.from(movies).sort(compare);
       setMovies(sortedMovies);
       setSelectedMovie(0);
@@ -83,36 +88,38 @@ function App() {
     }
   }
 
-  function onSearch(e) {
+  function handleSearch(e) {
     setSearch(e.target.value);
   }
 
-  function selectMovie(index) {
+  function handleMovieSelection(index) {
     setSelectedMovie(index);
   }
 
   const calculateRatings = (ratingsArray) => {
-    let imdbRating = ratingsArray[0]?.Value.substring(
-      0,
-      ratingsArray[0].Value.indexOf('/')
-    ).replace('.', '');
-    const rottenTomatoesRating = ratingsArray[1]?.Value.substring(
-      0,
-      ratingsArray[1].Value.indexOf('%')
+    //Create integer from decimal
+    let imdbRating = Number(
+      ratingsArray[0]?.Value.substring(
+        0,
+        ratingsArray[0].Value.indexOf('/')
+      ).replace('.', '')
     );
-
-    const metacriticRating = ratingsArray[2]?.Value.substring(
-      0,
-      ratingsArray[2].Value.indexOf('/')
+    //Create integer from percentage
+    const rottenTomatoesRating = Number(
+      ratingsArray[1]?.Value.substring(0, ratingsArray[1].Value.indexOf('%'))
+    );
+    //Create integer from fraction
+    const metacriticRating = Number(
+      ratingsArray[2]?.Value.substring(0, ratingsArray[2].Value.indexOf('/'))
     );
 
     const aggregateRating =
-      Number(imdbRating) +
-      Number(rottenTomatoesRating) +
-      Number(metacriticRating);
+      imdbRating + rottenTomatoesRating + metacriticRating;
+
     const averageRating = Math.round(aggregateRating / ratingsArray.length);
     return {
       averageRating,
+      //Create object keys with spaces to use in Badge components
       ['Internet Movie Database']: imdbRating,
       ['Rotten Tomatoes ']: rottenTomatoesRating,
       ['Metacritic Rating']: metacriticRating,
@@ -121,20 +128,24 @@ function App() {
 
   return (
     <div style={{ height: '100vh' }}>
-      <Container xxl className='pt-4'>
+      <Container className='pt-4'>
         <Row className='g-0'>
-          <SearchForm onSearch={onSearch} sortByCriteria={sortByCriteria} />
+          <SearchForm onSearch={handleSearch} sortByCriteria={sortByCriteria} />
         </Row>
         <Row className='g-0'>
           <Col xs={12} xl={6}>
             <MoviesTable
               movies={movies}
               search={search}
-              selectMovie={selectMovie}
+              selectMovie={handleMovieSelection}
             />
           </Col>
           <Col className='ps-xl-4 py-3' xs={12} xl={6}>
-            <MovieCard movies={movies} selectedMovie={selectedMovie} />
+            <MovieCard
+              key={nanoid()}
+              movies={movies}
+              selectedMovie={selectedMovie}
+            />
           </Col>
         </Row>
       </Container>

@@ -1,15 +1,19 @@
+//bootstrap components
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Badge from 'react-bootstrap/Badge';
-import Ratings from './Ratings';
+//
 import { nanoid } from 'nanoid';
+
 const MovieCard = ({ movies, selectedMovie }) => {
+  //Set movie according to index of table row
   const movie = selectedMovie !== '' ? movies[selectedMovie] : null;
+  //Display nothing if no selected movie
   const display = movie ? 'block' : 'none';
   const badgeStyle =
-    'badge bg-light bg-gradient border border-info border-1   text-secondary px-3 fs-6 py-2 rounded-pill me-2 fw-normal mb-3';
+    'badge bg-light bg-gradient border border-info border-1 text-secondary px-3 fs-6 py-2 rounded-pill me-2 fw-normal mb-3';
 
-  const iterateRatings = () => {
+  const createRatingBadges = () => {
     let badges = [];
     if (movie?.ratings) {
       for (const key in movie.ratings) {
@@ -18,6 +22,7 @@ const MovieCard = ({ movies, selectedMovie }) => {
         }
         badges.push(
           <Badge
+            key={nanoid()}
             className={badgeStyle}
           >{`${key}: ${movie.ratings[key]} %`}</Badge>
         );
@@ -29,9 +34,9 @@ const MovieCard = ({ movies, selectedMovie }) => {
   function calculateRatingColor() {
     const rating = movie?.ratings.averageRating;
     if (rating) {
-      if (rating < 60) return 'danger';
-      if (rating >= 60 && rating < 75) return 'warning';
-      if (rating >= 75) return 'success';
+      if (rating < 60) return 'danger'; //red
+      if (rating >= 60 && rating < 75) return 'warning'; //yellow
+      if (rating >= 75) return 'success'; //green
     }
   }
 
@@ -51,23 +56,17 @@ const MovieCard = ({ movies, selectedMovie }) => {
           />
         </Col>
         <Col xs={8} xxl={8}>
-          <p key={nanoid()} className='p-0'>
-            {movie?.plot}
-          </p>
+          <p className='p-0'>{movie?.plot}</p>
         </Col>
         <div style={{ display: display }}>
           <h4 className='my-3 fw-normal'>Directed by {movie?.director}</h4>
           <h5 className='mb-4 fw-normal'>
             Average Score:{' '}
-            {/*   <Ratings
-              fs={'16px'}
-              averageRating={movie?.ratings?.averageRating}
-            /> */}
             <Badge className='ms-2 fs-5' bg={calculateRatingColor()}>
               {movie?.ratings?.averageRating}
             </Badge>
           </h5>
-          {iterateRatings()}
+          {createRatingBadges()}
         </div>
       </Row>
     </>
