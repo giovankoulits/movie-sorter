@@ -31,45 +31,41 @@ const MovieCard = ({ movies, selectedMovie }) => {
     return badges;
   };
 
-  function calculateRatingColor() {
+  const calculateRatingColor = () => {
     const rating = movie?.ratings.averageRating;
     if (rating) {
       if (rating < 60) return 'danger'; //red
       if (rating >= 60 && rating < 75) return 'warning'; //yellow
       if (rating >= 75) return 'success'; //green
     }
-  }
+  };
 
   return (
-    <>
-      <Row className='mb-3'>
-        {movies.length > 0 && (
-          <h3 className='fw-bold mb-4'>
-            {movie?.title || 'No Movie Selected'}
-          </h3>
-        )}
-        <Col xs={4} xxl={4}>
-          <img
-            className='img-fluid rounded'
-            src={movie?.poster}
-            alt={movie?.title}
-          />
-        </Col>
-        <Col xs={8} xxl={8}>
-          <p className='p-0'>{movie?.plot}</p>
-        </Col>
-        <div style={{ display: display }}>
-          <h4 className='my-3 fw-normal'>Directed by {movie?.director}</h4>
-          <h5 className='mb-4 fw-normal'>
-            Average Score:{' '}
-            <Badge className='ms-2 fs-5' bg={calculateRatingColor()}>
-              {movie?.ratings?.averageRating}
-            </Badge>
-          </h5>
-          {createRatingBadges()}
-        </div>
-      </Row>
-    </>
+    <Row className='mb-3'>
+      {movies.length > 0 && (
+        <h3 className='fw-bold mb-4'>{movie?.title || 'No Movie Selected'}</h3>
+      )}
+      <Col xs={4} xxl={4}>
+        <img
+          className='img-fluid rounded'
+          src={movie?.poster}
+          alt={movie?.title}
+        />
+      </Col>
+      <Col xs={8} xxl={8}>
+        <p className='p-0'>{movie?.plot}</p>
+      </Col>
+      <div style={{ display: display }}>
+        <h4 className='my-3 fw-normal'>Directed by {movie?.director}</h4>
+        <h5 className='mb-4 fw-normal'>
+          Average Score:{' '}
+          <Badge className='ms-2 fs-5' bg={calculateRatingColor()}>
+            {movie?.ratings?.averageRating}
+          </Badge>
+        </h5>
+        {createRatingBadges()}
+      </div>
+    </Row>
   );
 };
 

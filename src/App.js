@@ -19,64 +19,54 @@ function App() {
   const [search, setSearch] = useState('');
   const [selectedMovie, setSelectedMovie] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!movies.length) {
-        fetch('https://swapi.dev/api/films/?format=json')
-          .then((res) => res.json())
-          .then((data) =>
-            data.results.forEach((movie) => {
-              fetch(
-                `https://www.omdbapi.com/?t=${
-                  movie.title
-                }&y=${movie.release_date.slice(0, 4)}&apikey=b9a5e69d`
-              )
-                .then((res) => res.json())
-                .then((res) => {
-                  return res;
-                })
-                .then((updatedMovie) => {
-                  setMovies((prev) => [
-                    ...prev,
-                    {
-                      title: movie.title,
-                      episodeId: movie.episode_id,
-                      releaseDate: movie.release_date,
-                      director: movie.director,
-                      plot: movie.opening_crawl,
-                      poster: updatedMovie.Poster,
-                      id: updatedMovie.imdbID,
-                      ratings: calculateRatings(updatedMovie.Ratings),
-                    },
-                  ]);
-                });
-            })
-          );
-      }
-    };
-    fetchData();
-  }, []);
+  //Fetch OMDb Api
+  const fetchAdditionalData = async (movie) => {
+    const title = movie.title;
+    const year = movie.release_date.slice(0, 4);
+    const url = `https://www.omdbapi.com/?t=${title}&y=${year}&apikey=b9a5e69d`;
+    const request = await fetch(url);
+    const response = await request.json();
+    setMovies((prev) => [
+      ...prev,
+      {
+        title: movie.title,
+        episodeId: movie.episode_id,
+        releaseDate: movie.release_date,
+        director: movie.director,
+        plot: movie.opening_crawl,
+        poster: response.Poster,
+        id: response.imdbID,
+        ratings: calculateRatings(response.Ratings),
+      },
+    ]);
+  };
 
-  function sortByCriteria(value) {
+  //Fetch Swapi Api
+  const fetchData = async () => {
+    if (!movies.length) {
+      const request = await fetch('https://swapi.dev/api/films/?format=json');
+      const response = await request.json();
+      //Make a fetch call to OMDb Api for each response object
+      response.results.forEach(fetchAdditionalData);
+    }
+  };
+
+  const sortByCriteria = (value) => {
     const compare = (movieA, movieB) => {
       //Sort according to rating
       if (movieA[value]?.averageRating) {
-        if (movieA[value].averageRating > movieB[value].averageRating) {
-          return -1;
-        }
-        if (movieA[value].averageRating < movieB[value].averageRating) {
-          return 1;
-        }
-        return 0;
+        return movieA[value].averageRating > movieB[value].averageRating
+          ? -1
+          : movieA[value].averageRating < movieB[value].averageRating
+          ? 1
+          : 0;
       }
       //Sort according to year or episode
-      if (movieA[value] > movieB[value]) {
-        return 1;
-      }
-      if (movieA[value] < movieB[value]) {
-        return -1;
-      }
-      return 0;
+      return movieA[value] > movieB[value]
+        ? 1
+        : movieA[value] < movieB[value]
+        ? -1
+        : 0;
     };
 
     if (movies.length > 0) {
@@ -86,15 +76,11 @@ function App() {
       setSelectedMovie(0);
       return;
     }
-  }
+  };
 
-  function handleSearch(e) {
-    setSearch(e.target.value);
-  }
+  const handleSearch = (e) => setSearch(e.target.value);
 
-  function handleMovieSelection(index) {
-    setSelectedMovie(index);
-  }
+  const handleMovieSelection = (index) => setSelectedMovie(index);
 
   const calculateRatings = (ratingsArray) => {
     //Create integer from decimal
@@ -125,6 +111,10 @@ function App() {
       ['Metacritic Rating']: metacriticRating,
     };
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div style={{ height: '100vh' }}>
