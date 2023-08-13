@@ -12,8 +12,8 @@
   --star-color: #f8af65;
   --text-color: #121212;
   --heading-color: #464546;
-  --bg-form: #f7f8fa;
-  --selected-bg: #f1f3f8;
+  --bg-form: #f2f4f7;
+  --selected-bg: #e1e5ec;
 }
 
 span,
@@ -53,7 +53,7 @@ tr:hover {
 }
 
 .my-form-bg {
-  background: rgba(238, 241, 247, 0.479);
+  background-color: var(--bg-form);
 }
 
 @media screen and (max-width: 768px) {
