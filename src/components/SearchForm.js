@@ -1,20 +1,21 @@
+//Hooks
 import { useRef } from 'react';
-//bootstrap components
+//Bootstrap components
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-//bootstrap icons
-import { BsSearch } from 'react-icons/bs';
+//Bootstrap icons
+import { ImSearch } from 'react-icons/im';
 
 const SearchForm = ({ onSearch, sortByCriteria }) => {
   const inputRef = useRef(null);
 
   return (
     <div
-      className='px-3'
+      className='px-3  my-form-bg'
       style={{
-        background: 'var(--bg-form)',
+        /* background: 'var(--bg-form)', */
         borderRadius: '5px',
       }}
     >
@@ -25,7 +26,7 @@ const SearchForm = ({ onSearch, sortByCriteria }) => {
               className='mt-3 mb-0 my-md-3'
               onChange={(e) => {
                 if (e.target.value) {
-                  //Remove Sort By option upon selection of criteria
+                  //Remove "Sort By" option after selection
                   inputRef.current.style.display = 'none';
                   sortByCriteria(e.target.value);
                 }
@@ -42,7 +43,7 @@ const SearchForm = ({ onSearch, sortByCriteria }) => {
           <Col xs={12} md={9}>
             <InputGroup className='my-3'>
               <InputGroup.Text>
-                <BsSearch />
+                <ImSearch style={{ color: 'var(--star-color)' }} />
               </InputGroup.Text>
               <Form.Control onChange={onSearch} placeholder='Search Movies' />
             </InputGroup>

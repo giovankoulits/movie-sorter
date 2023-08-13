@@ -1,3 +1,4 @@
+// Highlight searched text in table cell
 import Highlighter from 'react-highlight-words';
 
 const TableCell = ({ search, movieData }) => {
@@ -8,8 +9,8 @@ const TableCell = ({ search, movieData }) => {
   }
 
   return (
-    <td className='py-3'>
-      <Highlighter // highlight searched text in table cell
+    <td className='py-3 bg-transparent'>
+      <Highlighter
         highlightClassName='myHighlightClass'
         searchWords={[search]}
         autoEscape={true}

@@ -1,28 +1,35 @@
 import Table from 'react-bootstrap/Table';
-import { nanoid } from 'nanoid';
 import TableRow from './TableRow';
+import { nanoid } from 'nanoid';
 
-const MoviesTable = ({ movies, search, selectMovie }) => {
+const MoviesTable = ({
+  movies,
+  search,
+  handleMovieSelection,
+  selectedMovie,
+}) => {
   return (
-    <Table className='pb-0 mb-0 ' hover>
+    <Table className='pb-0 mb-0 '>
       <tbody>
         {/* filter movies  according to search */}
-        {movies
-          .filter((movie) => {
-            return search.toLowerCase() === ''
-              ? movie
-              : movie.title?.toLowerCase().includes(search.toLowerCase()) ||
-                  movie?.releaseDate.includes(search);
-          })
-          .map((movie, index) => (
-            <TableRow
-              key={nanoid()}
-              index={index}
-              selectMovie={selectMovie}
-              search={search}
-              movie={movie}
-            />
-          ))}
+        {movies.length > 0 &&
+          movies
+            .filter((movie) => {
+              return search.toLowerCase() === ''
+                ? movie
+                : movie.title?.toLowerCase().includes(search.toLowerCase()) || //parse letters
+                    movie?.releaseDate.includes(search); //parse numbers
+            })
+            .map((movie, index) => (
+              <TableRow
+                key={nanoid()}
+                index={index}
+                handleMovieSelection={handleMovieSelection}
+                search={search}
+                movie={movie}
+                selectedMovie={selectedMovie}
+              />
+            ))}
       </tbody>
     </Table>
   );

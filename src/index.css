@@ -3,31 +3,61 @@
   font-family: 'Mulish', sans-serif;
   font-weight: 500;
 }
+::selection {
+  background-color: var(--highlight-color);
+}
 
 :root {
-  --highlight-color: #b4d7dd;
-  --star-color: #f0b855;
+  --highlight-color: #bda2b9;
+  --star-color: #f8af65;
   --text-color: #121212;
+  --heading-color: #464546;
   --bg-form: #f7f8fa;
-  --spinner-color: #96d2db;
+  --selected-bg: #f1f3f8;
 }
 
-span {
+span,
+p {
   color: var(--text-color);
 }
+
+h4,
+h3,
+h5 {
+  color: var(--heading-color);
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--text-color);
+}
+
+tr {
+  border: 2px solid !;
 }
 
 tr:hover {
   cursor: pointer;
+  background: var(--selected-bg);
+}
+
+.my-badge {
+  font-size: 12px !important;
 }
 
 .myHighlightClass {
   background-color: var(--highlight-color);
   padding: 1px 2px;
   font-weight: 600;
+}
+
+.my-form-bg {
+  background: rgba(238, 241, 247, 0.479);
+}
+
+@media screen and (max-width: 768px) {
+  * {
+    font-size: 15px;
+  }
 }

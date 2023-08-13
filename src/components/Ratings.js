@@ -5,7 +5,7 @@ import { BsStar, BsStarHalf, BsStarFill } from 'react-icons/bs';
 const Ratings = ({ fs, averageRating }) => {
   //Add half-full star for ratings with last digit > 2
   const halfStar =
-    parseInt(averageRating?.toString().slice(-1)) > 2 ? true : false;
+    parseInt(averageRating.toString().slice(-1)) > 2 ? true : false;
   const style = { fontSize: `${fs}`, color: 'var(--star-color) ' };
   return (
     <>

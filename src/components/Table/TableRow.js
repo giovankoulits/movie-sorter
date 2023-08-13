@@ -1,14 +1,28 @@
 import Ratings from '../Ratings';
 import TableCell from './TableCell';
-const TableRow = ({ movie, search, selectMovie, index }) => {
+
+const TableRow = ({
+  movie,
+  search,
+  handleMovieSelection,
+  index,
+  selectedMovie,
+}) => {
+  const selected = index === selectedMovie;
+
   return (
-    <tr onClick={(e) => selectMovie(index)}>
+    <tr
+      style={{ backgroundColor: selected ? 'var(--selected-bg)' : '' }}
+      onClick={(e) => {
+        handleMovieSelection(index);
+      }}
+    >
       <TableCell search={search} movieData={movie?.episodeId} />
       <TableCell search={search} movieData={movie?.title} />
-      <TableCell search={search} movieData={movie?.releaseDate} />
-      <td className='py-3'>
-        <Ratings fs={'16px'} averageRating={movie?.ratings.averageRating} />
+      <td className='py-3 bg-transparent'>
+        <Ratings fs={'14px'} averageRating={movie?.ratings.averageRating} />
       </td>
+      <TableCell search={search} movieData={movie?.releaseDate} />
     </tr>
   );
 };

@@ -1,10 +1,17 @@
 const Spinner = () => {
   return (
     <div className='d-flex justify-content-center mt-4'>
+      <h3 style={{ color: 'var(  --heading-color)' }}>
+        Loading your movies&nbsp;
+      </h3>
       <div
-        className='spinner-border '
+        className='spinner-border mb-4'
         role='status'
-        style={{ width: '50px', height: '50px', color: 'var(--spinner-color)' }}
+        style={{
+          width: '30px',
+          height: '30px',
+          color: 'var(--highlight-color)',
+        }}
       ></div>
     </div>
   );
