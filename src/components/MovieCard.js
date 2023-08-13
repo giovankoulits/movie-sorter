@@ -2,18 +2,18 @@
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Badge from 'react-bootstrap/Badge';
+//
+import { forwardRef } from 'react';
 
-const MovieCard = ({
-  movies,
-  selectedMovie,
-  createRatingBadges,
-  calculateRatingColor,
-}) => {
+const MovieCard = (
+  { movies, selectedMovie, createRatingBadges, calculateRatingColor },
+  ref
+) => {
   const movie = selectedMovie !== '' ? movies[selectedMovie] : null;
   const display = movie ? 'block' : 'none';
 
   return (
-    <Row className='mb-3'>
+    <Row ref={ref} className='mb-3'>
       {/* check that the movies array is full before displaying heading*/}
       {movies.length > 0 && (
         <h3
@@ -56,4 +56,4 @@ const MovieCard = ({
   );
 };
 
-export default MovieCard;
+export default forwardRef(MovieCard);

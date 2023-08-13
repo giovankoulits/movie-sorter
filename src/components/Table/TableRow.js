@@ -7,6 +7,7 @@ const TableRow = ({
   handleMovieSelection,
   index,
   selectedMovie,
+  scrollToView,
 }) => {
   const selected = index === selectedMovie;
 
@@ -14,6 +15,7 @@ const TableRow = ({
     <tr
       style={{ backgroundColor: selected ? 'var(--selected-bg)' : '' }}
       onClick={(e) => {
+        scrollToView();
         handleMovieSelection(index);
       }}
     >

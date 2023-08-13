@@ -7,6 +7,7 @@ const MoviesTable = ({
   search,
   handleMovieSelection,
   selectedMovie,
+  scrollToView,
 }) => {
   return (
     <Table className='pb-0 mb-0 '>
@@ -22,6 +23,7 @@ const MoviesTable = ({
             })
             .map((movie, index) => (
               <TableRow
+                scrollToView={scrollToView}
                 key={nanoid()}
                 index={index}
                 handleMovieSelection={handleMovieSelection}

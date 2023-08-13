@@ -1,5 +1,6 @@
 //Nanoid for unique keys
 import { nanoid } from 'nanoid';
+
 // Styles
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,6 +28,8 @@ function App() {
     handleMovieSelection,
     calculateRatingColor,
     createRatingBadges,
+    targetElement,
+    scrollToView,
   } = useLogic();
 
   return (
@@ -43,10 +46,12 @@ function App() {
             handleMovieSelection={handleMovieSelection}
             movies={movies}
             search={search}
+            scrollToView={scrollToView}
           />
         </Col>
         <Col className='ps-xl-4 py-3' xs={12} xl={6}>
           <MovieCard
+            ref={targetElement}
             key={nanoid()}
             movies={movies}
             selectedMovie={selectedMovie}

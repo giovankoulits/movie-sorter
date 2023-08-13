@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 //hooks
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 //bootstrap components
 import { Badge } from 'react-bootstrap';
 
@@ -10,6 +10,13 @@ const useLogic = () => {
   const [selectedMovie, setSelectedMovie] = useState('');
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const targetElement = useRef();
+
+  const scrollToView = () => {
+    const element = targetElement;
+    element.current.scrollIntoView();
+  };
 
   //Fetch from OMDb Api
   const fetchOmdbData = async (movie) => {
@@ -164,6 +171,8 @@ const useLogic = () => {
     handleMovieSelection,
     calculateRatingColor,
     createRatingBadges,
+    targetElement,
+    scrollToView,
   };
 };
 
