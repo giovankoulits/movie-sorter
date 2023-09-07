@@ -1,0 +1,63 @@
+* {
+  font-size: 16px;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 500;
+}
+::selection {
+  background-color: var(--highlight-color);
+}
+
+:root {
+  --highlight-color: #ceb9cb;
+  --star-color: #f8af65;
+  --text-color: #121212;
+  --heading-color: #464546;
+  --bg-form: #f2f4f7;
+  --selected-bg: #e1e5ec;
+}
+
+span,
+p {
+  color: var(--text-color);
+}
+
+h4,
+h3,
+h5 {
+  color: var(--heading-color);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+tr {
+  border: 2px solid !;
+}
+
+tr:hover {
+  cursor: pointer;
+  background: var(--selected-bg);
+}
+
+.my-badge {
+  font-size: 12px !important;
+}
+
+.myHighlightClass {
+  background-color: var(--highlight-color);
+  padding: 1px 2px;
+  font-weight: 600;
+}
+
+.my-form-bg {
+  background-color: var(--bg-form);
+}
+
+@media screen and (max-width: 768px) {
+  * {
+    font-size: 15px;
+  }
+}
