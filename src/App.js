@@ -15,7 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //Bootstrap components
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 //Components
 import SearchForm from './components/SearchForm';
 import MoviesTable from './components/Table/MoviesTable';
